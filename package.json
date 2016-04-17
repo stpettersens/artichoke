@@ -1,0 +1,24 @@
+{
+  "name": "artichoke",
+  "version": "1.0.0",
+  "description": "Unix archiver (ar) implementation with Node.js",
+  "main": "artichoke.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/stpettersens/artichoke.git"
+  },
+  "keywords": [
+    "unix",
+    "ar",
+    "implementation"
+  ],
+  "author": "Sam Saint-Pettersen <s.stpettersen+github@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stpettersens/artichoke/issues"
+  },
+  "homepage": "https://github.com/stpettersens/artichoke#readme"
+}
