@@ -1,2 +1,2 @@
-# artichoke
-Unix archiver (ar) implementation with Node.js.
+#### artichoke
+> Unix archiver (ar) implementation with Node.js.
