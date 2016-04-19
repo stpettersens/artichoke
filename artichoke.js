@@ -10,6 +10,7 @@
 let USE_NATIVE = false
 
 const fs = require('fs')
+const os = require('os')
 let native = null
 
 try {
@@ -95,6 +96,9 @@ module.exports.createArchive = function (archive, files, options) {
     if (native === null) {
       USE_NATIVE = false
       console.warn('artichoke: Falling back to pure JS implementation ( native: ', USE_NATIVE, ')')
+      if (os.platform() === 'win32') {
+        console.warn('There is known problems with the non-native impl. on Windows!')
+      }
     }
   }
 

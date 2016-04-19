@@ -97,7 +97,8 @@ void write_ar_entries(string archive, vector<ArEntry> entries) {
     for(int i = 0; i < (int)entries.size(); i++) {
         ostringstream contents;
         string filename = entries[i].get_file();
-        ifstream input(filename.c_str());
+        ifstream input;
+        input.open(filename.c_str(), ios::binary);
         contents << input.rdbuf();
         input.close();
         stringstream f;
