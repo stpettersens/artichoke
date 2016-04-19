@@ -69,9 +69,9 @@ vector<string> split(string str, char delimiter) {
     return internal;
 }
 
-string padData(int n, string data) {
+string pad_data(int n, string data) {
     string padded = data;
-    for(int i = 0; i < (n - data.length()); i++) {
+    for(int i = 0; i < (int)(n - data.length()); i++) {
         padded.append(" ");
     }
     return padded;
@@ -102,12 +102,12 @@ void write_ar_entries(string archive, vector<ArEntry> entries) {
         input.close();
         stringstream f;
         f << filename << "/";
-        data << padData(16, f.str()); // (a)
-        data << padData(12, to_string(entries[i].get_modified())); // (b)
-        data << padData(6, to_string(entries[i].get_owner())); // (c)
-        data << padData(6, to_string(entries[i].get_group())); // (d)
-        data << padData(8, to_string(entries[i].get_mode())); // (e)
-        data << padData(10, to_string(entries[i].get_size())); // (f)
+        data << pad_data(16, f.str()); // (a)
+        data << pad_data(12, to_string(entries[i].get_modified())); // (b)
+        data << pad_data(6, to_string(entries[i].get_owner())); // (c)
+        data << pad_data(6, to_string(entries[i].get_group())); // (d)
+        data << pad_data(8, to_string(entries[i].get_mode())); // (e)
+        data << pad_data(10, to_string(entries[i].get_size())); // (f)
         data << (char)0x60 << (char)0x0A; // (g)
         data << contents.str();
         if(i > 0 && i < (int)entries.size() - 1) {
