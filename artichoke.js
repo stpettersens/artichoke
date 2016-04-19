@@ -1,6 +1,5 @@
 /*
-  Artichoke
-  Unix archiver (ar) implementation with Node.js.
+  artichoke: Unix archiver (ar) implementation with Node.js.
   Copyright 2016 Sam Saint-Pettersen.
 
   Released under the MIT License.
@@ -8,7 +7,17 @@
 
 'use strict'
 
+let USE_NATIVE = false
+
 const fs = require('fs')
+let native = null
+
+try {
+  native = require('./build/Release/artichoke')
+  USE_NATIVE = true
+} catch (e) {
+  USE_NATIVE = false
+}
 
 function getStats (filename) {
   let stats = fs.lstatSync(filename)
@@ -40,17 +49,22 @@ function createEntry (filename) {
   }
 }
 
-module.exports.createArchive = function (archive, files) {
-  let entries = [];
-  if (Array.isArray(files)) {
-    entries = files.map(function (f) {
-      return createEntry(f)
-    })
-  } else {
-    let attribs = getStats(files)
-    entries.push(createEntry(files))
+function formatBytes (bytes) {
+  let never = false;
+  let formatted = '';
+  for (let i = 0; i < bytes.length; i++) {
+    if (bytes.charCodeAt(i) === 11) {
+      let offset = bytes.charCodeAt(i) + 128
+      let repla = String.fromCharCode(offset)
+      formatted += repla
+    } else {
+      formatted += bytes.charAt(i)
+    }
   }
+  return formatted
+}
 
+function writeArchive (archive, entries) {
   /**
    * COMMON AR FORMAT SPECIFICATION
    * (0) Global header
@@ -65,17 +79,46 @@ module.exports.createArchive = function (archive, files) {
   let ar = fs.createWriteStream(archive)
   let header = `!<arch>${String.fromCharCode(10)}` // (0)
   let data = ''
-  entries.map(function (entry) {
-    let contents = fs.readFileSync(entry.file, 'ascii').toString()
-    console.log(JSON.stringify(entry, null, 4))
-    data += `${entry.file}/${padData(16 - entry.file.length)}` // (a)
-    data += `${entry.modified}${padData(13 - entry.modified.toString().length)}` // (b)
-    data += `${entry.owner}${padData(7 - entry.owner.toString().length)}` // (c) 
-    data += `${entry.group}${padData(7 - entry.group.toString().length)}${entry.mode}` // (d, e)
-    data += `${padData(9 - entry.mode.toString().length)}${entry.size}` // (f)
-    data += `${padData(11 - entry.size.toString().length)}${entry.magic}` // (g)
+  for (let i = 0; i < entries.length; i++) {
+    let contents = fs.readFileSync(entries[i].file, 'ascii').toString()
+    data += `${entries[i].file}/${padData(16 - entries[i].file.length)}` // (a)
+    data += `${entries[i].modified}${padData(13 - entries[i].modified.toString().length)}` // (b)
+    data += `${entries[i].owner}${padData(7 - entries[i].owner.toString().length)}` // (c) 
+    data += `${entries[i].group}${padData(7 - entries[i].group.toString().length)}${entries[i].mode}` // (d, e)
+    data += `${padData(9 - entries[i].mode.toString().length)}${entries[i].size}` // (f)
+    data += `${padData(11 - entries[i].size.toString().length)}${entries[i].magic}` // (g)
     data += contents
-  })
+    if(i > 0) {
+      data += String.fromCharCode(0)
+    }
+  }
   ar.write(header + data + String.fromCharCode(10))
   ar.close()
+}
+
+module.exports.createArchive = function (archive, files) {
+  let entries = [];
+  if (Array.isArray(files)) {
+    entries = files.map(function (f) {
+      return createEntry(f)
+    })
+  } else {
+    let attribs = getStats(files)
+    entries.push(createEntry(files))
+  }
+
+  console.log(JSON.stringify(entries, null, 4))
+
+  if (USE_NATIVE) {
+    let manifest = archive + '.entries'
+    fs.writeFileSync(manifest, '')
+    entries.map(function (entry) {
+      fs.appendFileSync(manifest,
+      `${entry.file}:${entry.modified}:${entry.owner}:`
+      +  `${entry.group}:${entry.mode}:${entry.size}\n`)
+    })
+    native.write_archive(archive, manifest)
+  } else {
+    writeArchive(archive, entries)
+  }
 }
