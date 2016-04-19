@@ -110,6 +110,9 @@ void write_ar_entries(string archive, vector<ArEntry> entries) {
         data << padData(10, to_string(entries[i].get_size())); // (f)
         data << (char)0x60 << (char)0x0A; // (g)
         data << contents.str();
+        if(i > 0 && i < (int)entries.size() - 1) {
+            data << (char)0x00;
+        }
     }
     ar << header.str() << data.str();
     ar.close();
