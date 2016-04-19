@@ -1,2 +1,2 @@
 #### artichoke
-> Unix archiver (ar) implementation with Node.js.
+> :trident: Unix archiver (ar) implementation with Node.js.
