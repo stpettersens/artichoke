@@ -10,7 +10,8 @@
 let USE_NATIVE = false
 
 const fs = require('fs')
-const os = require('os')
+const conv = require('binstring')
+const BitArray = require('node-bitarray')
 let native = null
 
 try {
@@ -48,6 +49,10 @@ function createEntry (filename) {
   }
 }
 
+function toBits (data) {
+  return conv(data, {out: 'buffer'})
+}
+
 function writeArchive (archive, entries) {
   /**
    * COMMON AR FORMAT SPECIFICATION
@@ -60,24 +65,26 @@ function writeArchive (archive, entries) {
    * (f) File size in bytes (Decimal) [48:10]
    * (g) Magic number ("0x60 0x0A") [58:2] 
   */
-  let ar = fs.createWriteStream(archive)
+  let ar = fs.createWriteStream(archive, {flags: 'w', encoding: 'binary'})
   let header = '!<arch>' + String.fromCharCode(0x0A) // (0)
-  let data = ''
+  let data = []
+  data.push(toBits(header))
   for (let i = 0; i < entries.length; i++) {
-    let contents = fs.readFileSync(entries[i].file, 'ascii').toString()
-    data += padData(16, entries[i].file + '/') // (a)
-    data += padData(12, entries[i].modified.toString()) // (b)
-    data += padData(6, entries[i].owner.toString()) // (c) 
-    data += padData(6, entries[i].group.toString()) // (d)
-    data += padData(8, entries[i].mode.toString()) // (e)
-    data += padData(10, entries[i].size.toString()) // (f)
-    data += String.fromCharCode(0x60) + String.fromCharCode(0x0A) // (g)
-    data += contents
+    let contents = fs.readFileSync(entries[i].file)
+    let bits = BitArray.fromBuffer(contents)
+    data.push(toBits(padData(16, entries[i].file + '/'))) // (a)
+    data.push(toBits(padData(12, entries[i].modified.toString()))) // (b)
+    data.push(toBits(padData(6, entries[i].owner.toString()))) // (c) 
+    data.push(toBits(padData(6, entries[i].group.toString()))) // (d)
+    data.push(toBits(padData(8, entries[i].mode.toString()))) // (e)
+    data.push(toBits(padData(10, entries[i].size.toString()))) // (f)
+    data.push(toBits(String.fromCharCode(0x60) + String.fromCharCode(0x0A))) // (g)
+    data.push(BitArray.toBuffer(bits))
     if (i > 0 && i < entries.length - 1) {
-      data += String.fromCharCode(0x00)
+      data.push(toBits(String.fromCharCode(0x00)))
     }
   }
-  ar.write(header + data)
+  ar.write(Buffer.concat(data))
   ar.close()
 }
 
@@ -96,9 +103,6 @@ module.exports.createArchive = function (archive, files, options) {
     if (native === null) {
       USE_NATIVE = false
       console.warn('artichoke: Falling back to pure JS implementation ( native: ', USE_NATIVE, ')')
-      if (os.platform() === 'win32') {
-        console.warn('There is known problems with the non-native impl. on Windows!')
-      }
     }
   }
 
