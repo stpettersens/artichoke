@@ -26,7 +26,6 @@
   "gypfile": true,
   "dependencies": {
     "binstring": "^0.2.1",
-    "nan": "^2.2.1",
-    "node-bitarray": "^0.1.0"
+    "nan": "^2.2.1"
   }
 }

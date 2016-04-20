@@ -11,7 +11,6 @@ let USE_NATIVE = false
 
 const fs = require('fs')
 const conv = require('binstring')
-const BitArray = require('node-bitarray')
 let native = null
 
 try {
@@ -71,7 +70,6 @@ function writeArchive (archive, entries) {
   data.push(toBuffer(header))
   for (let i = 0; i < entries.length; i++) {
     let contents = fs.readFileSync(entries[i].file)
-    let bits = BitArray.fromBuffer(contents)
     data.push(toBuffer(padData(16, entries[i].file + '/'))) // (a)
     data.push(toBuffer(padData(12, entries[i].modified.toString()))) // (b)
     data.push(toBuffer(padData(6, entries[i].owner.toString()))) // (c)
@@ -79,7 +77,7 @@ function writeArchive (archive, entries) {
     data.push(toBuffer(padData(8, entries[i].mode.toString()))) // (e)
     data.push(toBuffer(padData(10, entries[i].size.toString()))) // (f)
     data.push(toBuffer(String.fromCharCode(0x60) + String.fromCharCode(0x0A))) // (g)
-    data.push(BitArray.toBuffer(bits))
+    data.push(contents)
     if (i > 0 && i < entries.length - 1) {
       data.push(toBuffer(String.fromCharCode(0x00)))
     }
