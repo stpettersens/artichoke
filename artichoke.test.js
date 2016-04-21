@@ -14,8 +14,7 @@ let files = ['artichoke.js', 'LICENSE']
 
 describe('Test artichoke:', function () {
   it('Should create archive using native add-on.', function (done) {
-    artichoke.createArchive(archives[0], files,
-    {native: true, verbose: true})
+    artichoke.createArchive(archives[0], files, {native: true, verbose: true})
     if (!fs.existsSync(archives[0])) {
       throw Error
     }
@@ -23,8 +22,7 @@ describe('Test artichoke:', function () {
   })
 
   it('Should create archive using pure JS implementation.', function (done) {
-    artichoke.createArchive(archives[1], files,
-    {native: false, verbose: true})
+    artichoke.createArchive(archives[1], files, {native: false, verbose: true})
     if (!fs.existsSync(archives[1])) {
       throw Error
     }
