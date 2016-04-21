@@ -2,9 +2,8 @@ sudo: true
 language: node_js
 compiler: g++
 node_js:
-  - '0.11'
-  - '0.12'
-  - 'iojs'
+  - '0.5.1'
+  - '0.4.2'
 
 before_install:
   - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
