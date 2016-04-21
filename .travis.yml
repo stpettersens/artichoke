@@ -1,4 +1,4 @@
-sudo: false
+sudo: true
 language: node_js
 compiler: g++
 node_js:
