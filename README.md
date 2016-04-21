@@ -1,5 +1,5 @@
 #### artichoke
-> :trident: Unix archiver (ar) implementation with Node.js.
+> :package: Unix archiver (ar) implementation with Node.js.
 
 [![Build Status](https://travis-ci.org/stpettersens/artichoke.png?branch=master)](https://travis-ci.org/stpettersens/artichoke)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](https://github.com/feross/standard)
