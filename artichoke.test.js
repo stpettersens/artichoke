@@ -11,8 +11,22 @@ const fs = require('fs')
 
 let archives = ['artichoke_na.ar', 'artichoke_js.ar']
 let files = ['artichoke.js', 'LICENSE']
+let sources = ['artichoke.js', 'artichoke.test.js']
 
 describe('Test artichoke:', function () {
+    it('Test code conforms to JS Standard Style (http://standardjs.com).', function (done) {
+    _exec(`standard ${sources.join(' ')}`, function (err, stdout, stderr) {
+      let passed = true
+      if (err || stderr.length > 0) {
+        console.log('\n' + stderr)
+        console.log(stdout)
+        passed = false
+      }
+      assert.equal(passed, true)
+      done()
+    })
+  })
+  
   it('Should create archive using native add-on.', function (done) {
     artichoke.createArchive(archives[0], files, {native: true, verbose: true})
     if (!fs.existsSync(archives[0])) {
