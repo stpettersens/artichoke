@@ -103,7 +103,12 @@ module.exports.createArchive = function (archive, files, options) {
     }
   }
 
+  if (options && !options.native) {
+    USE_NATIVE = false
+  }
+
   if (options && options.verbose) {
+    console.info('Using native: ', USE_NATIVE)
     console.log(JSON.stringify(entries, null, 4))
   }
 
