@@ -2,6 +2,7 @@ build/
 node_modules/
 *.tar.gz
 *.deb
+*.ar
 debian-binary
 .gitignore
 .travis.yml
