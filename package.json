@@ -5,7 +5,7 @@
   "main": "artichoke.js",
   "scripts": {
     "install": "node-gyp rebuild",
-    "test": "node node_modules/mocha/bin/mocha artichoke.test.js"
+    "test": "mocha artichoke.test.js"
   },
   "repository": {
     "type": "git",
@@ -29,7 +29,6 @@
     "nan": "^2.2.1"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
-    "mocha": "^2.4.5"
+    "chai": "^3.5.0"
   }
 }
