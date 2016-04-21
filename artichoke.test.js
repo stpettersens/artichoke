@@ -14,7 +14,7 @@ let archives = ['artichoke_na.ar', 'artichoke_js.ar']
 let sources = ['artichoke.js', 'artichoke.test.js']
 
 describe('Test artichoke:', function () {
-  it('Test code conforms to JS Standard Style (http://standardjs.com).', function (done) {
+    it('Test code conforms to JS Standard Style (http://standardjs.com).', function (done) {
     _exec(`standard ${sources.join(' ')}`, function (err, stdout, stderr) {
       let passed = true
       if (err || stderr.length > 0) {
