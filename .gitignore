@@ -2,5 +2,5 @@ build/
 node_modules/
 *.tar.gz
 *.deb
-debian-binary
 *.ar
+debian-binary
