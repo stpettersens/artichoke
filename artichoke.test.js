@@ -8,6 +8,7 @@
 const artichoke = require('./artichoke')
 const assert = require('chai').assert
 const fs = require('fs')
+const _exec = require('child_process').exec
 
 let archives = ['artichoke_na.ar', 'artichoke_js.ar']
 let files = ['artichoke.js', 'LICENSE']
