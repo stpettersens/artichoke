@@ -9,7 +9,7 @@ const artichoke = require('./artichoke')
 const assert = require('chai').assert
 const fs = require('fs')
 
-let archives = [ 'artichoke_na.ar', 'artichoke_js.ar' ]
+let archives = ['artichoke_na.ar', 'artichoke_js.ar']
 let files = ['artichoke.js', 'LICENSE']
 
 describe('Test artichoke:', function () {
