@@ -1,0 +1,7 @@
+build/
+node_modules/
+*.tar.gz
+*.deb
+debian-binary
+.gitignore
+.travis.yml

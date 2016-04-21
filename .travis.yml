@@ -1,0 +1,8 @@
+sudo: false
+language: node_js
+node_js:
+  - '0.5.1'
+  - '0.4.2'
+  - 'iojs'
+
+script: npm test 
