@@ -68,20 +68,17 @@ function writeArchive (archive, entries) {
   let header = '!<arch>' + String.fromCharCode(0x0A) // (0)
   let data = []
   data.push(toBuffer(header))
-  for (let i = 0; i < entries.length; i++) {
-    let contents = fs.readFileSync(entries[i].file)
-    data.push(toBuffer(padData(16, entries[i].file + '/'))) // (a)
-    data.push(toBuffer(padData(12, entries[i].modified.toString()))) // (b)
-    data.push(toBuffer(padData(6, entries[i].owner.toString()))) // (c)
-    data.push(toBuffer(padData(6, entries[i].group.toString()))) // (d)
-    data.push(toBuffer(padData(8, entries[i].mode.toString()))) // (e)
-    data.push(toBuffer(padData(10, entries[i].size.toString()))) // (f)
+  entries.map(function (entry) {
+    let contents = fs.readFileSync(entry.file)
+    data.push(toBuffer(padData(16, entry.file + '/'))) // (a)
+    data.push(toBuffer(padData(12, entry.modified.toString()))) // (b)
+    data.push(toBuffer(padData(6, entry.owner.toString()))) // (c)
+    data.push(toBuffer(padData(6, entry.group.toString()))) // (d)
+    data.push(toBuffer(padData(8, entry.mode.toString()))) // (e)
+    data.push(toBuffer(padData(10, entry.size.toString()))) // (f)
     data.push(toBuffer(String.fromCharCode(0x60) + String.fromCharCode(0x0A))) // (g)
     data.push(contents)
-    if (i > 0 && i < entries.length - 1) {
-      data.push(toBuffer(String.fromCharCode(0x00)))
-    }
-  }
+  })
   ar.write(Buffer.concat(data))
   ar.close()
 }
