@@ -2,7 +2,8 @@
   artichoke: Unix archiver (ar) implementation with Node.js.
   Copyright 2016 Sam Saint-Pettersen.
 
-  Released under the MIT License.
+  Dual licensed under the GPL and MIT licenses;
+  see GPL-LICENSE and MIT-LICENSE respectively.
 */
 
 'use strict'

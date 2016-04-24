@@ -4,7 +4,8 @@
 
   Native add-on.
 
-  Released under the MIT License.
+  Dual licensed under the GPL and MIT licenses;
+  see GPL-LICENSE and MIT-LICENSE respectively.
 */
 
 #include <string>
