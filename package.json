@@ -1,6 +1,6 @@
 {
   "name": "artichoke",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Unix archiver (ar) implementation with Node.js",
   "main": "artichoke.js",
   "scripts": {
