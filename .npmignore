@@ -1,9 +1,11 @@
 build/
 node_modules/
 *.tar.gz
+*.tgz
 *.deb
 *.ar
 debian-binary
 .gitignore
+.npmignore
 .travis.yml
 test.js
