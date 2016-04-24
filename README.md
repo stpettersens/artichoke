@@ -8,7 +8,7 @@
 
 ##### Install
 
-`npm install artichoke --production`
+- `npm install artichoke --production`
 
 ##### Tests
 
@@ -20,7 +20,7 @@ and then install [Mocha](https://github.com/mochajs/mocha) and [standard](https:
 
 Then run tests with:
 
-`npm test`
+- `npm test`
 
 ##### Usage
 
