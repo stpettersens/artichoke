@@ -123,3 +123,7 @@ module.exports.createArchive = function (archive, files, options) {
     writeArchive(archive, entries)
   }
 }
+
+module.exports.unpackArchive = function (archive, options) {
+  // TODO
+}
