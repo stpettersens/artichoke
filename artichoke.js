@@ -84,6 +84,13 @@ function writeArchive (archive, entries) {
   ar.close()
 }
 
+function checkArchive (ar) {
+  let signature = []
+  for (let i = 0; i < 7; i++) {
+    signature.push(ar[i])
+  }
+}
+
 module.exports.createArchive = function (archive, files, options) {
   let entries = []
   if (Array.isArray(files)) {
@@ -125,5 +132,6 @@ module.exports.createArchive = function (archive, files, options) {
 }
 
 module.exports.unpackArchive = function (archive, options) {
-  // TODO
+  let ar = fs.readFileSync(archive)
+  checkArchive(ar)
 }
