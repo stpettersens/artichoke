@@ -13,9 +13,8 @@
 #include "artichoke.h"
 
 void export_write_archive(const Nan::FunctionCallbackInfo<v8::Value>& info) {
-
     if (info.Length() < 2) {
-        Nan::ThrowTypeError("artichoke-native: Wrong number of argments");
+        Nan::ThrowTypeError("artichoke-native: Wrong number of arguments");
         return;
     }
 
@@ -32,9 +31,29 @@ void export_write_archive(const Nan::FunctionCallbackInfo<v8::Value>& info) {
     info.GetReturnValue().Set(code);
 }
 
+void export_read_archive(const Nan::FunctionCallbackInfo<v8::Value>& info) {
+    if (info.Length() < 1) {
+        Nan::ThrowTypeError("artichoke-native: Wrong number of arguments");
+        return;
+    }
+
+    if (!info[0]->IsString()) {
+        Nan::ThrowTypeError("artichoke-native: Argument should be string");
+        return;
+    }
+
+    v8::String::Utf8Value archive(info[0]->ToString());
+    v8::Local<v8::Number> code = Nan::New(
+    read_archive(std::string(*archive)));
+
+    info.GetReturnValue().Set(code);
+}
+
 void init(v8::Local<v8::Object> exports) {
     exports->Set(Nan::New("write_archive").ToLocalChecked(),
-    Nan::New<v8::FunctionTemplate>(export_write_archive)->GetFunction());       
+    Nan::New<v8::FunctionTemplate>(export_write_archive)->GetFunction());
+    exports->Set(Nan::New("read_archive").ToLocalChecked(),
+    Nan::New<v8::FunctionTemplate>(export_read_archive)->GetFunction());
 }
 
 NODE_MODULE(addon, init)

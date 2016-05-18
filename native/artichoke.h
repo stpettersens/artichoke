@@ -12,5 +12,6 @@
 #define __ARTICHOKE
 
 int write_archive(std::string, std::string);
+int read_archive(std::string);
 
 #endif

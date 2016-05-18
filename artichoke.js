@@ -14,12 +14,12 @@ const fs = require('fs')
 const conv = require('binstring')
 let native = null
 
-try {
+/*try {
   native = require('./build/Release/artichoke')
   USE_NATIVE = true
 } catch (e) {
   USE_NATIVE = false
-}
+}*/
 
 function getStats (filename) {
   let stats = fs.lstatSync(filename)
@@ -85,33 +85,54 @@ function writeArchive (archive, entries) {
 }
 
 function checkArchive (ar) {
-  let signature = []
+  let valid = true
+  let signature = ''
   for (let i = 0; i < 7; i++) {
-    signature.push(ar[i])
+    signature += String.fromCharCode(ar[i])
+  }
+  if (signature !== '!<arch>') {
+    valid = false
+  }
+  return valid
+}
+
+function readArchive (archive) {
+  let ar = fs.readFileSync(archive)
+  let data = []
+  if (checkArchive(ar)) {
+    for (let i = 8; i < ar.length; i++) {
+      data.push(String.fromCharCode(ar[i]))
+    }
+    console.log(data)
+  } else {
+    console.warn('artichoke: File is not a valid archive')
   }
 }
 
-module.exports.createArchive = function (archive, files, options) {
-  let entries = []
-  if (Array.isArray(files)) {
-    entries = files.map(function (f) {
-      return createEntry(f)
-    })
-  } else {
-    entries.push(createEntry(files))
-  }
-
+function setCommonOptions (options) {
   if (options && options.native) {
     if (native === null) {
       USE_NATIVE = false
       console.warn('artichoke: Falling back to pure JS implementation ( native: ', USE_NATIVE, ')')
     }
   }
-
   if (options && !options.native) {
     USE_NATIVE = false
   }
+  return options
+}
 
+module.exports.createArchive = function (archive, files, options) {
+  let entries = []
+  if (Array.isArray(files)) {
+    entries = files.map(function (f) {a
+      return createEntry(f)
+    })
+  } else {
+    entries.push(createEntry(files))
+  }
+
+  options = setCommonOptions(options)
   if (options && options.verbose) {
     console.info('Using native: ', USE_NATIVE)
     console.log(JSON.stringify(entries, null, 4))
@@ -132,6 +153,15 @@ module.exports.createArchive = function (archive, files, options) {
 }
 
 module.exports.unpackArchive = function (archive, options) {
-  let ar = fs.readFileSync(archive)
-  checkArchive(ar)
+  options = setCommonOptions(options)
+  if (options && options.verbose) {
+    console.info('Use native: ', USE_NATIVE)
+    console.info('Unpacking archive: ', archive)
+  }
+
+  if (USE_NATIVE) {
+    native.read_archive(archive)
+  } else {
+    readArchive(archive)
+  }
 }

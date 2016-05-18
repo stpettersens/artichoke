@@ -88,7 +88,7 @@ void write_ar_entries(string archive, vector<ArEntry> entries) {
      * (d) Group ID (Decimal) [34:6]
      * (e) File mode (Octal) [40:8]
      * (f) File size in bytes (Decimal) [48:10]
-     * (g) Magic number ("0x60 0x0A") [58:2] 
+     * (g) Magic number ("0x60 0x0A") [58:2]
     */
     ostringstream header;
     ostringstream data;
@@ -117,6 +117,14 @@ void write_ar_entries(string archive, vector<ArEntry> entries) {
     ar.close();
 }
 
+bool check_archive(string ar) {
+  return true;
+}
+
+void read_ar_entries(string archive) {
+
+}
+
 int write_archive(string archive, string manifest) {
     vector<ArEntry> entries;
     string l;
@@ -124,11 +132,15 @@ int write_archive(string archive, string manifest) {
     while(getline(f, l)) {
         vector<string> entry = split(l, ':');
         entries.push_back(
-        ArEntry(entry[0], stoi(entry[1]), stoi(entry[2]), 
+        ArEntry(entry[0], stoi(entry[1]), stoi(entry[2]),
         stoi(entry[3]), stoi(entry[4]), stoi(entry[5])));
     }
     f.close();
     write_ar_entries(archive, entries);
     remove(manifest.c_str());
+    return 0;
+}
+
+int read_archive(string archive) {
     return 0;
 }
