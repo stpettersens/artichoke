@@ -14,12 +14,12 @@ const fs = require('fs')
 const conv = require('binstring')
 let native = null
 
-/*try {
+/* try {
   native = require('./build/Release/artichoke')
   USE_NATIVE = true
 } catch (e) {
   USE_NATIVE = false
-}*/
+} */
 
 function getStats (filename) {
   let stats = fs.lstatSync(filename)
@@ -125,7 +125,7 @@ function setCommonOptions (options) {
 module.exports.createArchive = function (archive, files, options) {
   let entries = []
   if (Array.isArray(files)) {
-    entries = files.map(function (f) {a
+    entries = files.map(function (f) {
       return createEntry(f)
     })
   } else {
