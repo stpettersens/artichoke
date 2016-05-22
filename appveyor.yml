@@ -1,0 +1,17 @@
+environment:
+  matrix:
+    - nodejs_version: "4"
+    - nodejs_version: "5"
+
+  install:
+    - ps: Install-Product node $env:nodejs_version
+    - node --version
+    - npm --version
+    - npm install -g standard
+    - npm install -g mocha
+    - npm install
+
+  test_script:
+    - npm test
+
+  build: off
