@@ -106,9 +106,9 @@ function readArchive (archive) {
       if (String.fromCharCode(ar[i]) !== '`') {
         iheaders.push(String.fromCharCode(ar[i]))
       }
-      idata.push(ar[i]);
+      idata.push(ar[i])
     }
-    headers = iheaders.join('').match(/([\.\-\_\w\/]+\s*\d{10}\s{2}\d{4}\s{2}\d{4}\s{2}\d{6}\s{2}\d{1,4})/g)
+    headers = iheaders.join('').match(/([\.\-_\w\/]+\s*\d{10}\s{2}\d{4}\s{2}\d{4}\s{2}\d{6}\s{2}\d{1,4})/g)
     console.log(headers)
   } else {
     console.warn('artichoke: File is not a valid archive')
