@@ -14,12 +14,12 @@ const fs = require('fs')
 const conv = require('binstring')
 let native = null
 
-/* try {
+try {
   native = require('./build/Release/artichoke')
   USE_NATIVE = true
 } catch (e) {
   USE_NATIVE = false
-} */
+}
 
 function getStats (filename) {
   let stats = fs.lstatSync(filename)
