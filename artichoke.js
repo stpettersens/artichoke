@@ -98,12 +98,14 @@ function checkArchive (ar) {
 
 function readArchive (archive) {
   let ar = fs.readFileSync(archive)
-  let data = []
+  let iheaders = []
+  let idata = []
   if (checkArchive(ar)) {
+    // !TODO
+    // ([\-\_\w\/]+)\s{2}(\d{10})\s{2}(\d{4})\s{2}(\d{4})\s{2}(\d{6})\s{2}(\d{1})
     for (let i = 8; i < ar.length; i++) {
-      data.push(String.fromCharCode(ar[i]))
+      console.log(String.fromCharCode(ar[i]))
     }
-    console.log(data)
   } else {
     console.warn('artichoke: File is not a valid archive')
   }
