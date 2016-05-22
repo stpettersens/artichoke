@@ -98,8 +98,6 @@ function checkArchive (ar) {
 
 function readArchive (archive) {
   let ar = fs.readFileSync(archive)
-  let iheaders = []
-  let idata = []
   if (checkArchive(ar)) {
     // !TODO
     // ([\-\_\w\/]+)\s{2}(\d{10})\s{2}(\d{4})\s{2}(\d{4})\s{2}(\d{6})\s{2}(\d{1})
