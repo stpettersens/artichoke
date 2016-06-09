@@ -100,7 +100,6 @@ function readArchive (archive) {
   let ar = fs.readFileSync(archive)
   let iheaders = []
   let idata = []
-  let data = []
   if (checkArchive(ar)) {
     for (let i = 8; i < ar.length; i++) {
       if (String.fromCharCode(ar[i]) !== '`') {
@@ -108,11 +107,22 @@ function readArchive (archive) {
       }
       idata.push(ar[i])
     }
-    let headers = iheaders.join('').match(/([\.\-_\w\/]+\s*\d{10}\s{2}\d{4}\s{2}\d{4}\s{2}\d{6}\s{2}\d{1,4})/g)
+    let headers = iheaders.join('')
+    .match(/([\.\-_\w\/]+\s*\d{10}\s{2}\d{4}\s{2}\d{4}\s{2}\d{6}\s{2}\d{1,4})/g)
+    console.log(headers)
+    let data = []
     for (let i = 0; i < idata.length; i++) {
-      console.log(idata[i].toString(16))
+      data.push(idata[i].toString(16))
     }
-    fs.writeFileSync('out.bin', idata.join(''))
+    data = data.join('|').split('a')
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].charAt(0) !== '') {
+        let entry = data[i].split('|')
+        for (let x = 0; x < entry.length; x++) {
+          console.log(String.fromCharCode(parseInt(entry[x], 16)))
+        }
+      }
+    }
   } else {
     console.warn('artichoke: File is not a valid archive')
   }
