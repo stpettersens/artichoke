@@ -99,7 +99,6 @@ function checkArchive (ar) {
 function readArchive (archive) {
   let ar = fs.readFileSync(archive)
   let iheaders = []
-  let headers = []
   let idata = []
   if (checkArchive(ar)) {
     for (let i = 8; i < ar.length; i++) {
@@ -108,8 +107,9 @@ function readArchive (archive) {
       }
       idata.push(ar[i])
     }
-    headers = iheaders.join('').match(/([\.\-_\w\/]+\s*\d{10}\s{2}\d{4}\s{2}\d{4}\s{2}\d{6}\s{2}\d{1,4})/g)
+    let headers = iheaders.join('').match(/([\.\-_\w\/]+\s*\d{10}\s{2}\d{4}\s{2}\d{4}\s{2}\d{6}\s{2}\d{1,4})/g)
     console.log(headers)
+    console.log(idata)
   } else {
     console.warn('artichoke: File is not a valid archive')
   }
