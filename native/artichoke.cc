@@ -118,7 +118,10 @@ void write_ar_entries(string archive, vector<ArEntry> entries) {
 }
 
 bool check_archive(string ar) {
-  return true;
+  bool valid = true;
+  string signature;
+  // !TODO
+  return valid;
 }
 
 void read_ar_entries(string archive) {
