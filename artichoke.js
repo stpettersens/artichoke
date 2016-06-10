@@ -107,22 +107,30 @@ function readArchive (archive) {
       }
       idata.push(ar[i])
     }
-    let headers = iheaders.join('')
-    .match(/([\.\-_\w\/]+\s*\d{10}\s{2}\d{4}\s{2}\d{4}\s{2}\d{6}\s{2}\d{1,4})/g)
+    let hpattern = /([\.\-_\w\/]+\s*\d{10}\s{2}\d{4}\s{2}\d{4}\s{2}\d{6}\s{2}\d{1,4})/g
+    let headers = iheaders.join('').match(hpattern)
     console.log(headers)
     let data = []
     for (let i = 0; i < idata.length; i++) {
       data.push(idata[i].toString(16))
     }
     data = data.join('|').split('a')
+    let entries = []
+    let index = 0
     for (let i = 0; i < data.length; i++) {
       if (data[i].charAt(0) !== '') {
         let entry = data[i].split('|')
+        let raw_entry = ''
         for (let x = 0; x < entry.length; x++) {
-          console.log(String.fromCharCode(parseInt(entry[x], 16)))
+          raw_entry += String.fromCharCode(parseInt(entry[x], 16))
+        }
+        if (!hpattern.test(raw_entry)) {
+          //entries.push(entry)
+          console.log('is not header')
         }
       }
     }
+    console.log(entries)
   } else {
     console.warn('artichoke: File is not a valid archive')
   }
