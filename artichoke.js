@@ -114,23 +114,12 @@ function readArchive (archive) {
     for (let i = 0; i < idata.length; i++) {
       data.push(idata[i].toString(16))
     }
-    data = data.join('|').split('a')
-    let entries = []
-    let index = 0
-    for (let i = 0; i < data.length; i++) {
-      if (data[i].charAt(0) !== '') {
-        let entry = data[i].split('|')
-        let raw_entry = ''
-        for (let x = 0; x < entry.length; x++) {
-          raw_entry += String.fromCharCode(parseInt(entry[x], 16))
-        }
-        if (!hpattern.test(raw_entry)) {
-          //entries.push(entry)
-          console.log('is not header')
-        }
-      }
-    }
-    console.log(entries)
+    data = data.join('|').split(/\|a\|/g)
+    data.splice(0, 1) // Remove first header.
+    console.log(data)
+    // ...
+    console.log('Header length = ', headers.length)
+    console.log('Data length = ', data.length)
   } else {
     console.warn('artichoke: File is not a valid archive')
   }
