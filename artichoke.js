@@ -53,6 +53,10 @@ function toBuffer (data) {
   return conv(data, {out: 'buffer'})
 }
 
+function toUtf8 (data) {
+  return conv(data, {in: 'hex', out: 'utf8'})
+}
+
 function writeArchive (archive, entries) {
   /**
    * COMMON AR FORMAT SPECIFICATION
@@ -116,10 +120,16 @@ function readArchive (archive) {
     }
     data = data.join('|').split(/\|a\|/g)
     data.splice(0, 1) // Remove first header.
-    console.log(data)
-    // ...
+    let fdata = []
+    for (let i = 0; i < data.length; i++) {
+      let mh = toUtf8(data[i].replace(/\|/g, ''))
+      if (!hpattern.test(mh)) {
+        fdata.push(data[i].replace(/\|/g, ''))
+      }
+    }
     console.log('Header length = ', headers.length)
-    console.log('Data length = ', data.length)
+    console.log('FData length = ', fdata.length)
+    console.log(fdata)
   } else {
     console.warn('artichoke: File is not a valid archive')
   }
