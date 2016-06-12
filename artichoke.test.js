@@ -5,12 +5,12 @@
 /* global describe it */
 'use strict'
 
-const artichoke = require('./artichoke')
+// const artichoke = require('./artichoke')
 const assert = require('chai').assert
-const fs = require('fs')
+// const fs = require('fs')
 const _exec = require('child_process').exec
 
-let archives = ['artichoke_na.ar', 'artichoke_js.ar']
+// let archives = ['artichoke_na.ar', 'artichoke_js.ar']
 let sources = ['artichoke.js', 'artichoke.test.js']
 
 describe('Test artichoke:', function () {
