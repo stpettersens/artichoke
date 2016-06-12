@@ -35,13 +35,13 @@ describe('Test artichoke:', function () {
     done()
   }) */
 
-  it('Should create archive using pure JS implementation.', function (done) {
+  /* it('Should create archive using pure JS implementation.', function (done) {
     artichoke.createArchive(archives[1], sources, {native: false, verbose: true})
     if (!fs.existsSync(archives[1])) {
       throw Error
     }
     done()
-  })
+  }) */
 
   /* it('Archives created by native and pure JS implementations should be equal.', function (done) {
     let stats = []
