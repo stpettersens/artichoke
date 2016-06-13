@@ -140,6 +140,7 @@ function readArchive (archive) {
         ffdata.push(fdata[i])
       }
     }
+    fdata = []
     drops.map(function (d) {
       ffdata.splice(d, 1)
     })
