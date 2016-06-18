@@ -128,12 +128,12 @@ function readArchive (archive) {
         fdata.push(data[i].replace(/\|/g, ''))
       }
     }
-    console.log('Header length = ', headers.length)
-    console.log('FData length = ', fdata.length)
+    // console.log('Header length = ', headers.length)
+    // console.log('FData length = ', fdata.length)
     let drops = []
     for (let i = 0; i < fdata.length; i++) {
       if (fdata[i].startsWith('1f') && fdata[i + 1] !== undefined) {
-        console.log('Concating ' + i + ' and ' + (i + 1))
+        // console.log('Concating ' + i + ' and ' + (i + 1))
         ffdata.push(`${fdata[i]}a${fdata[i + 1]}`)
         drops.push(i + 1)
       } else {
@@ -147,6 +147,7 @@ function readArchive (archive) {
     ffdata.splice(headers.length, 1)
     console.log('FFData length = ', ffdata.length)
     console.log(ffdata)
+    //fs.writeFileSync('out.bin', toUtf8(ffdata[2]))
   } else {
     console.warn('artichoke: File is not a valid archive')
   }
