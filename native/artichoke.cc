@@ -120,11 +120,11 @@ void write_ar_entries(string archive, vector<ArEntry> entries) {
     ar.close();
 }
 
-bool check_archive(string ar) {
+bool check_archive(vector<unsigned char> ar) {
     bool valid = true;
     string signature;
     for(auto i = 0; i < 7; i++) {
-      signature += ar[i];
+      signature += ar.at(i);
     }
     if(strcmp(signature.c_str(), "!<arch>") != 0) {
       valid = false;
@@ -133,8 +133,19 @@ bool check_archive(string ar) {
 }
 
 void read_ar_entries(string archive) {
-    string foobar = "!<arch> some dummy header!";
-    cout << check_archive(foobar) << endl;
+    streampos fileSize;
+    ifstream f(archive.c_str(), ios::binary | ios::in);
+    f.seekg(0, std::ios::end);
+    fileSize = f.tellg();
+    f.seekg(0, std::ios::beg);
+    vector<unsigned char> ar(fileSize);
+    f.read((char*) &ar[0], fileSize);
+    f.close();
+    if(check_archive(ar)) {
+        for(auto i = 8; i < (int)ar.size(); i++) {
+          // !TODO: Push to iheaders.
+        }
+    }
 }
 
 int write_archive(string archive, string manifest) {
