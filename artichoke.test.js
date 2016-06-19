@@ -57,4 +57,12 @@ describe('Test artichoke:', function () {
     })
     done()
   }) */
+
+  it('Should extract archiving using pure JS implementation.', function (done) {
+    artichoke.unpackArchive('demo_0.1-1.deb', {native: false, verbose: true})
+    assert.equal(fs.existsSync('control.tar.gz'), true)
+    assert.equal(fs.existsSync('data.tar.gz'), true)
+    assert.equal(fs.existsSync('debian-binary'), true)
+    done()
+  })
 })

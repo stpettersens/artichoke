@@ -2,7 +2,7 @@ build/
 node_modules/
 *.tar.gz
 *.tgz
-*.deb
+# Temporarily allow Debian archives.
 *.ar
 *.bin
 debian-binary
