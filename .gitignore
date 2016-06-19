@@ -4,4 +4,5 @@ node_modules/
 *.tgz
 *.deb
 *.ar
+*.bin
 debian-binary

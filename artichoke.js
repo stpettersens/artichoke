@@ -117,7 +117,7 @@ function readArchive (archive) {
     }
     let hpattern = /([\.\-_\w\/]+\s*\d{10}\s{2}\d{4}\s{2}\d{4}\s{2}\d{6}\s{2}\d{1,4})/g
     let headers = iheaders.join('').match(hpattern)
-    console.log(headers)
+    // console.log(headers)
     let data = []
     for (let i = 0; i < idata.length; i++) {
       data.push(idata[i].toString(16))
@@ -150,14 +150,17 @@ function readArchive (archive) {
     })
     ffdata.splice(headers.length, 1)
     // console.log('FFData length = ', ffdata.length)
-    console.log(ffdata)
+    // console.log(ffdata)
     for (let i = 0; i < ffdata.length; i++) {
-      let out = fs.createWriteStream('out.bin', {flags: 'w', encoding: 'binary'})
+      let gpattern = /([\.\-_\w\/]+)\s*(\d{10})\s{2}\d{4}\s{2}\d{4}\s{2}(\d{6})\s{2}(\d{1,4})/
+      let parts = headers[i].match(gpattern)
+      let out = fs.createWriteStream(
+      parts[1].substr(0, parts[1].length - 1), {flags: 'w', encoding: 'binary'})
       let n = 0
-      if (ffdata[1].length % 2 !== 0) {
+      if (ffdata[i].length % 2 !== 0) {
         n = 1
       }
-      out.write(fromHexToBuffer(ffdata[1].substr(0, ffdata[1].length - n)))
+      out.write(fromHexToBuffer(ffdata[i].substr(0, ffdata[i].length - n)))
       out.close()
     }
   } else {
