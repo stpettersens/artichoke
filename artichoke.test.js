@@ -5,12 +5,12 @@
 /* global describe it */
 'use strict'
 
-// const artichoke = require('./artichoke')
+const artichoke = require('./artichoke')
 const assert = require('chai').assert
-// const fs = require('fs')
+const fs = require('fs')
 const _exec = require('child_process').exec
 
-// let archives = ['artichoke_na.ar', 'artichoke_js.ar']
+let archives = ['artichoke_na.ar', 'artichoke_js.ar']
 let sources = ['artichoke.js', 'artichoke.test.js']
 
 describe('Test artichoke:', function () {
@@ -35,13 +35,13 @@ describe('Test artichoke:', function () {
     done()
   }) */
 
-  /* it('Should create archive using pure JS implementation.', function (done) {
+  it('Should create archive using pure JS implementation.', function (done) {
     artichoke.createArchive(archives[1], sources, {native: false, verbose: true})
     if (!fs.existsSync(archives[1])) {
       throw Error
     }
     done()
-  }) */
+  })
 
   /* it('Archives created by native and pure JS implementations should be equal.', function (done) {
     let stats = []
