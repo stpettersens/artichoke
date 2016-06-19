@@ -37,9 +37,7 @@ describe('Test artichoke:', function () {
 
   it('Should create archive using pure JS implementation.', function (done) {
     artichoke.createArchive(archives[1], sources, {native: false, verbose: true})
-    if (!fs.existsSync(archives[1])) {
-      throw Error
-    }
+    assert.equal(fs.existsSync(archives[1]), true)
     done()
   })
 
