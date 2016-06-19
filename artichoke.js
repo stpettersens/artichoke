@@ -57,6 +57,10 @@ function toUtf8 (data) {
   return conv(data, {in: 'hex', out: 'utf8'})
 }
 
+function fromHexToBuffer (data) {
+  return conv(data, {in: 'hex', out: 'buffer'})
+}
+
 function writeArchive (archive, entries) {
   /**
    * COMMON AR FORMAT SPECIFICATION
@@ -145,9 +149,17 @@ function readArchive (archive) {
       ffdata.splice(d, 1)
     })
     ffdata.splice(headers.length, 1)
-    console.log('FFData length = ', ffdata.length)
+    // console.log('FFData length = ', ffdata.length)
     console.log(ffdata)
-    //fs.writeFileSync('out.bin', toUtf8(ffdata[2]))
+    for (let i = 0; i < ffdata.length; i++) {
+      let out = fs.createWriteStream('out.bin', {flags: 'w', encoding: 'binary'})
+      let n = 0
+      if (ffdata[1].length % 2 !== 0) {
+        n = 1
+      }
+      out.write(fromHexToBuffer(ffdata[1].substr(0, ffdata[1].length - n)))
+      out.close()
+    }
   } else {
     console.warn('artichoke: File is not a valid archive')
   }
