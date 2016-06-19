@@ -11,7 +11,7 @@ const fs = require('fs')
 const _exec = require('child_process').exec
 
 let archives = ['artichoke_na.ar', 'artichoke_js.ar']
-let sources = ['artichoke.js', 'artichoke.test.js']
+let sources = ['artichoke.js', 'artichoke.test.js', 'Gulpfile.js']
 
 describe('Test artichoke:', function () {
   it('Test code conforms to JS Standard Style (http://standardjs.com).', function (done) {
@@ -58,7 +58,7 @@ describe('Test artichoke:', function () {
     done()
   }) */
 
-  it('Should extract archiving using pure JS implementation.', function (done) {
+  it('Should unpack archive using pure JS implementation.', function (done) {
     artichoke.unpackArchive('demo_0.1-1.deb', {native: false, verbose: true})
     assert.equal(fs.existsSync('control.tar.gz'), true)
     assert.equal(fs.existsSync('data.tar.gz'), true)
