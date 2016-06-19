@@ -143,7 +143,7 @@ void read_ar_entries(string archive) {
     f.close();
     if(check_archive(ar)) {
         for(auto i = 8; i < (int)ar.size(); i++) {
-          // !TODO: Push to iheaders.
+          // TODO: Push to iheaders.
         }
     }
 }
