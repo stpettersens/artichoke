@@ -8,10 +8,13 @@
   see GPL-LICENSE and MIT-LICENSE respectively.
 */
 
+#include <iostream> // !
+
 #include <string>
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <regex>
 #include <cstdio>
 #include <cstring>
 using namespace std;
@@ -118,14 +121,20 @@ void write_ar_entries(string archive, vector<ArEntry> entries) {
 }
 
 bool check_archive(string ar) {
-  bool valid = true;
-  string signature;
-  // !TODO
-  return valid;
+    bool valid = true;
+    string signature;
+    for(auto i = 0; i < 7; i++) {
+      signature += ar[i];
+    }
+    if(strcmp(signature.c_str(), "!<arch>") != 0) {
+      valid = false;
+    }
+    return valid;
 }
 
 void read_ar_entries(string archive) {
-
+    string foobar = "!<arch> some dummy header!";
+    cout << check_archive(foobar) << endl;
 }
 
 int write_archive(string archive, string manifest) {
@@ -145,5 +154,6 @@ int write_archive(string archive, string manifest) {
 }
 
 int read_archive(string archive) {
+    read_ar_entries(archive);
     return 0;
 }
