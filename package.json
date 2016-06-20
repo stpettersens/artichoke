@@ -1,6 +1,6 @@
 {
   "name": "artichoke",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Unix archiver (ar) implementation with Node.js",
   "main": "artichoke.js",
   "scripts": {
@@ -34,6 +34,7 @@
     "gulp-mocha": "^2.2.0",
     "gulp-rimraf": "^0.2.0",
     "gulp-sequence": "^0.4.5",
+    "gulp-wait": "0.0.2",
     "standard": "^7.1.2"
   }
 }
