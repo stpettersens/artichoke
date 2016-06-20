@@ -8,6 +8,7 @@ install:
   - node --version
   - npm --version
   - npm install -g gulp
+  - npm install -g standard
   - npm install
 
 test_script:
