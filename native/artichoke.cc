@@ -146,11 +146,12 @@ void read_ar_entries(string archive) {
     if(check_archive(ar)) {
         for(auto i = 8; i < (int)ar.size(); i++) {
           // TODO: Push to iheaders.
-          if(ar[i] == '`') {
+          if(ar[i] != '`') {
             iheaders.push_back(ar[i]);
           }
+          idata.push_back(ar[i]);
         }
-        cout << iheaders.at(0) << endl;
+        cout << idata.at(0) << endl;
     }
 }
 
