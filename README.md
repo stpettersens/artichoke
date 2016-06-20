@@ -12,11 +12,10 @@
 
 ##### Tests
 
-If you want to run the tests, install without `--production` flag
-and then install [Mocha](https://github.com/mochajs/mocha) and [standard](https://github.com/feross/standard) globally:
+If you want to run the tests, install without `--production` flag.
+You may also need to first install [Gulp](https://github.com/gulpjs/gulp) globally with:
 
-- `npm install -g mocha`
-- `npm install -g standard`
+- `npm install -g gulp`
 
 Then run tests with:
 
