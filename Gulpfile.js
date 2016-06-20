@@ -13,7 +13,7 @@ gulp.task('files', function () {
   .pipe(file('data.tar.gz', ''))
   .pipe(file('debian-binary', ''))
   .pipe(gulp.dest('.'))
-  .pipe(wait(1500))
+  .pipe(wait(30000))
 })
 
 gulp.task('test1', function () {
