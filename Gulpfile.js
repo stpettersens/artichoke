@@ -15,4 +15,5 @@ gulp.task('test2', function () {
   .pipe(mocha({reporter: 'min', timeout: 100000}))
 })
 
+gulp.task('clean', ['test1'])
 gulp.task('test', sequence('test1', 'test2'))
