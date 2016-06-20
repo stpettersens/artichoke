@@ -10,6 +10,6 @@ install:
   - npm install
 
 test_script:
-  - npm test
+  - gulp appveyor_test
 
 build: off
