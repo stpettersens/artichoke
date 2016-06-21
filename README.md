@@ -2,6 +2,7 @@
 > :package: Unix archiver (ar) implementation with Node.js.
 
 [![Build Status](https://travis-ci.org/stpettersens/artichoke.png?branch=master)](https://travis-ci.org/stpettersens/artichoke)
+[![Build status](https://ci.appveyor.com/api/projects/status/2b44ylfmbasc8n2o?svg=true)](https://ci.appveyor.com/project/stpettersens/artichoke)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](https://github.com/feross/standard)
 [![npm version](https://badge.fury.io/js/artichoke.svg)](http://npmjs.com/package/artichoke)
 [![Dependency Status](https://david-dm.org/stpettersens/artichoke.png?theme=shields.io)](https://david-dm.org/stpettersens/artichoke) [![Development Dependency Status](https://david-dm.org/stpettersens/artichoke/dev-status.png?theme=shields.io)](https://david-dm.org/stpettersens/artichoke#info=devDependencies)
