@@ -150,7 +150,13 @@ void read_ar_entries(string archive) {
           }
           idata.push_back(ar[i]);
         }
-        cout << idata.at(0) << endl;
+        regex hpattern("([\\.\\-_\\w\\/]+\\s*\\d{10}\\s{2}\\d{4}\\s{2}\\d{4}\\s{2}\\d{6}\\s{2}\\d{1,4})",
+        regex_constants::ECMAScript);
+        string mheaders;
+        for(unsigned char c : iheaders) {
+          mheaders += c;
+        }
+        // cout << mheaders << endl;
     }
 }
 
