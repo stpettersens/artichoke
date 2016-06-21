@@ -141,7 +141,6 @@ void read_ar_entries(string archive) {
     vector<unsigned char> ar(fileSize);
     vector<unsigned char> iheaders;
     vector<unsigned char> idata;
-    f.read((char*) &ar[0], fileSize);
     f.close();
     if(check_archive(ar)) {
         for(auto i = 8; i < (int)ar.size(); i++) {

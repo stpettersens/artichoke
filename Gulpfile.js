@@ -12,6 +12,8 @@ gulp.task('files', function () {
   .pipe(file('control.tar.gz', ''))
   .pipe(file('data.tar.gz', ''))
   .pipe(file('debian-binary', ''))
+  .pipe(file('artichoke_na.ar', ''))
+  .pipe(file('artichoke_js.ar', ''))
   .pipe(gulp.dest('.'))
   .pipe(wait(30000))
 })
