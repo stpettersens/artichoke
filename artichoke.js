@@ -12,6 +12,7 @@ let USE_NATIVE = false
 
 const fs = require('fs')
 const conv = require('binstring')
+
 let native = null
 
 try {
@@ -104,7 +105,7 @@ function checkArchive (ar) {
   return valid
 }
 
-function readArchive (archive) {
+function readArchive (archive, verbose) {
   let ar = fs.readFileSync(archive)
   let iheaders = []
   let idata = []
@@ -137,7 +138,7 @@ function readArchive (archive) {
     let drops = []
     for (let i = 0; i < fdata.length; i++) {
       if (fdata[i].startsWith('1f') && fdata[i + 1] !== undefined) {
-        // console.log('Concating ' + i + ' and ' + (i + 1))
+        // console.log('Concaternating ' + i + ' and ' + (i + 1))
         ffdata.push(`${fdata[i]}a${fdata[i + 1]}`)
         drops.push(i + 1)
       } else {
@@ -154,8 +155,11 @@ function readArchive (archive) {
     for (let i = 0; i < ffdata.length; i++) {
       let gpattern = /([\.\-_\w\/]+)\s*(\d{10})\s{2}\d{4}\s{2}\d{4}\s{2}(\d{6})\s{2}(\d{1,4})/
       let parts = headers[i].match(gpattern)
-      let out = fs.createWriteStream(
-      parts[1].substr(0, parts[1].length - 1), {flags: 'w', encoding: 'binary'})
+      let filename = parts[1].substr(0, parts[1].length - 1)
+      if (verbose) {
+        console.log('... ' + filename)
+      }
+      let out = fs.createWriteStream(filename, {flags: 'w', encoding: 'binary'})
       let n = 0
       if (ffdata[i].length % 2 !== 0) {
         n = 1
@@ -193,7 +197,8 @@ module.exports.createArchive = function (archive, files, options) {
 
   options = setCommonOptions(options)
   if (options && options.verbose) {
-    console.info('Using native: ', USE_NATIVE)
+    console.info('\nUsing native: ', USE_NATIVE)
+    console.info('Creating archive: ', archive)
     console.log(JSON.stringify(entries, null, 4))
   }
 
@@ -214,13 +219,13 @@ module.exports.createArchive = function (archive, files, options) {
 module.exports.unpackArchive = function (archive, options) {
   options = setCommonOptions(options)
   if (options && options.verbose) {
-    console.info('Use native: ', USE_NATIVE)
+    console.info('\nUse native: ', USE_NATIVE)
     console.info('Unpacking archive: ', archive)
   }
 
   if (USE_NATIVE) {
-    native.read_archive(archive)
+    native.read_archive(archive) //, options.verbose)
   } else {
-    readArchive(archive)
+    readArchive(archive, options.verbose)
   }
 }
