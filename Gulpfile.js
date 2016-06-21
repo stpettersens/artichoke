@@ -6,7 +6,6 @@ const clean = require('gulp-rimraf')
 const wait = require('gulp-wait')
 const file = require('gulp-file')
 const sequence = require('gulp-sequence')
-const glob = require('glob')
 
 gulp.task('files', function () {
   return gulp.src('*')
@@ -15,10 +14,6 @@ gulp.task('files', function () {
   .pipe(file('debian-binary', ''))
   .pipe(gulp.dest('.'))
   .pipe(wait(30000))
-})
-
-gulp.task('list', function () {
-  console.log(glob.sync('*'))
 })
 
 gulp.task('test1', function () {
@@ -33,4 +28,4 @@ gulp.task('test2', function () {
 
 gulp.task('clean', ['test1'])
 gulp.task('test', sequence('test1', 'test2'))
-gulp.task('appveyor_test', sequence('files', 'list', 'test2'))
+gulp.task('appveyor_test', sequence('files', 'test2'))
