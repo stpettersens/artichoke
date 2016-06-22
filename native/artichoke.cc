@@ -28,7 +28,7 @@ private:
     int size;
 
 public:
-  ArEntry(std::string file, int modified, int owner, int group, int mode, int size) {
+  ArEntry(string file, int modified, int owner, int group, int mode, int size) {
     this->file = file;
     this->modified = modified;
     this->owner = owner;
@@ -37,7 +37,7 @@ public:
     this->size = size;
   }
 
-  std::string get_file() {
+  string get_file() {
     return file;
   }
 
@@ -131,7 +131,7 @@ bool check_archive(vector<unsigned char> ar) {
   return valid;
 }
 
-void read_ar_entries(string archive) {
+void read_ar_entries(string archive, int verbose) {
   streampos fileSize;
   ifstream f(archive.c_str(), ios::binary | ios::in);
   f.seekg(0, std::ios::end);
@@ -188,7 +188,9 @@ int write_archive(string archive, string manifest) {
     return 0;
 }
 
-int read_archive(string archive) {
-    read_ar_entries(archive);
+int read_archive(string archive, int verbose) {
+
+
+    read_ar_entries(archive, verbose);
     return 0;
 }

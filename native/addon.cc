@@ -14,12 +14,12 @@
 
 void export_write_archive(const Nan::FunctionCallbackInfo<v8::Value>& info) {
   if (info.Length() < 2) {
-    Nan::ThrowTypeError("artichoke-native: Wrong number of arguments");
+    Nan::ThrowTypeError("artichoke-native (write_archive): Wrong number of arguments");
     return;
   }
 
   if (!info[0]->IsString() || !info[1]->IsString()) {
-    Nan::ThrowTypeError("artichoke-native: Arguments should be string, string");
+    Nan::ThrowTypeError("artichoke-native (write_archive): Arguments should be string, string");
     return;
   }
 
@@ -32,19 +32,20 @@ void export_write_archive(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 }
 
 void export_read_archive(const Nan::FunctionCallbackInfo<v8::Value>& info) {
-  if (info.Length() < 1) {
-      Nan::ThrowTypeError("artichoke-native: Wrong number of arguments");
-      return;
+  if (info.Length() < 2) {
+    Nan::ThrowTypeError("artichoke-native (read_archive): Wrong number of arguments");
+    return;
   }
 
-  if (!info[0]->IsString()) {
-      Nan::ThrowTypeError("artichoke-native: Argument should be string");
-      return;
+  if (!info[0]->IsString() || !info[1]->IsNumber()) {
+    Nan::ThrowTypeError("artichoke-native (read_archive): Arguments should be string, number (0 or 1)");
+    return;
   }
 
   v8::String::Utf8Value archive(info[0]->ToString());
+  int verbose = (int)info[1]->NumberValue();
   v8::Local<v8::Number> code = Nan::New(
-  read_archive(std::string(*archive)));
+  read_archive(std::string(*archive), verbose));
 
   info.GetReturnValue().Set(code);
 }

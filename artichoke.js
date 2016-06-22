@@ -224,7 +224,6 @@ module.exports.unpackArchive = function (archive, options) {
   }
 
   if (USE_NATIVE) {
-    native.read_archive(archive) //, options.verbose)
   } else {
     readArchive(archive, options.verbose)
   }
