@@ -9,7 +9,6 @@
 */
 
 #include <iostream> // !
-
 #include <string>
 #include <fstream>
 #include <sstream>
@@ -21,7 +20,7 @@ using namespace std;
 
 class ArEntry {
 private:
-    string file;
+    std::string file;
     int modified;
     int owner;
     int group;
@@ -29,148 +28,148 @@ private:
     int size;
 
 public:
-    ArEntry(string file, int modified, int owner, int group, int mode, int size) {
-        this->file = file;
-        this->modified = modified;
-        this->owner = owner;
-        this->group = group;
-        this->mode = mode;
-        this->size = size;
-    }
+  ArEntry(std::string file, int modified, int owner, int group, int mode, int size) {
+    this->file = file;
+    this->modified = modified;
+    this->owner = owner;
+    this->group = group;
+    this->mode = mode;
+    this->size = size;
+  }
 
-    string get_file() {
-        return file;
-    }
+  std::string get_file() {
+    return file;
+  }
 
-    int get_modified() {
-        return modified;
-    }
+  int get_modified() {
+    return modified;
+  }
 
-    int get_owner() {
-        return owner;
-    }
+  int get_owner() {
+    return owner;
+  }
 
-    int get_group() {
-        return group;
-    }
+  int get_group() {
+    return group;
+  }
 
-    int get_mode() {
-        return mode;
-    }
+  int get_mode() {
+    return mode;
+  }
 
-    int get_size() {
-        return size;
-    }
+  int get_size() {
+    return size;
+  }
 };
 
 vector<string> split(string str, char delimiter) {
-    vector<string> internal;
-    stringstream ss(str);
-    string token;
-    while(getline(ss, token, delimiter)) {
-        internal.push_back(token);
-    }
-    return internal;
+  vector<string> internal;
+  stringstream ss(str);
+  string token;
+  while(getline(ss, token, delimiter)) {
+    internal.push_back(token);
+  }
+  return internal;
 }
 
 string pad_data(int n, string data) {
-    string padded = data;
-    for(int i = 0; i < (int)(n - data.length()); i++) {
-        padded.append(" ");
-    }
-    return padded;
+  string padded = data;
+  for(int i = 0; i < (int)(n - data.length()); i++) {
+    padded.append(" ");
+  }
+  return padded;
 }
 
 void write_ar_entries(string archive, vector<ArEntry> entries) {
-    /**
-     * COMMON AR FORMAT SPECIFICATION
-     * (0) Global header
-     * (a) Filename in ASCII [0:16]
-     * (b) File modification timestamp (Decimal) [16:12]
-     * (c) Owner ID (Decimal) [28:6]
-     * (d) Group ID (Decimal) [34:6]
-     * (e) File mode (Octal) [40:8]
-     * (f) File size in bytes (Decimal) [48:10]
-     * (g) Magic number ("0x60 0x0A") [58:2]
-    */
-    ostringstream header;
-    ostringstream data;
-    ofstream ar;
-    ar.open(archive.c_str(), ofstream::out | ofstream::binary);
-    header << "!<arch>" << (char)0x0A; // (0)
-    for(int i = 0; i < (int)entries.size(); i++) {
-        ostringstream contents;
-        string filename = entries[i].get_file();
-        ifstream input;
-        input.open(filename.c_str(), ios::binary);
-        contents << input.rdbuf();
-        input.close();
-        stringstream f;
-        f << filename << "/";
-        data << pad_data(16, f.str()); // (a)
-        data << pad_data(12, to_string(entries[i].get_modified())); // (b)
-        data << pad_data(6, to_string(entries[i].get_owner())); // (c)
-        data << pad_data(6, to_string(entries[i].get_group())); // (d)
-        data << pad_data(8, to_string(entries[i].get_mode())); // (e)
-        data << pad_data(10, to_string(entries[i].get_size())); // (f)
-        data << (char)0x60 << (char)0x0A; // (g)
-        data << contents.str();
-    }
-    ar << header.str() << data.str();
-    ar.close();
+  /**
+   * COMMON AR FORMAT SPECIFICATION
+   * (0) Global header
+   * (a) Filename in ASCII [0:16]
+   * (b) File modification timestamp (Decimal) [16:12]
+   * (c) Owner ID (Decimal) [28:6]
+   * (d) Group ID (Decimal) [34:6]
+   * (e) File mode (Octal) [40:8]
+   * (f) File size in bytes (Decimal) [48:10]
+   * (g) Magic number ("0x60 0x0A") [58:2]
+  */
+  ostringstream header;
+  ostringstream data;
+  ofstream ar;
+  ar.open(archive.c_str(), ofstream::out | ofstream::binary);
+  header << "!<arch>" << (char)0x0A; // (0)
+  for(int i = 0; i < (int)entries.size(); i++) {
+    ostringstream contents;
+    string filename = entries[i].get_file();
+    ifstream input;
+    input.open(filename.c_str(), ios::binary);
+    contents << input.rdbuf();
+    input.close();
+    stringstream f;
+    f << filename << "/";
+    data << pad_data(16, f.str()); // (a)
+    data << pad_data(12, to_string(entries[i].get_modified())); // (b)
+    data << pad_data(6, to_string(entries[i].get_owner())); // (c)
+    data << pad_data(6, to_string(entries[i].get_group())); // (d)
+    data << pad_data(8, to_string(entries[i].get_mode())); // (e)
+    data << pad_data(10, to_string(entries[i].get_size())); // (f)
+    data << (char)0x60 << (char)0x0A; // (g)
+    data << contents.str();
+  }
+  ar << header.str() << data.str();
+  ar.close();
 }
 
 bool check_archive(vector<unsigned char> ar) {
-    bool valid = true;
-    string signature;
-    for(auto i = 0; i < 7; i++) {
-      signature += ar.at(i);
-    }
-    if(strcmp(signature.c_str(), "!<arch>") != 0) {
-      valid = false;
-    }
-    return valid;
+  bool valid = true;
+  string signature;
+  for(auto i = 0; i < 7; i++) {
+    signature += ar.at(i);
+  }
+  if(strcmp(signature.c_str(), "!<arch>") != 0) {
+    valid = false;
+  }
+  return valid;
 }
 
 void read_ar_entries(string archive) {
-    streampos fileSize;
-    ifstream f(archive.c_str(), ios::binary | ios::in);
-    f.seekg(0, std::ios::end);
-    fileSize = f.tellg();
-    f.seekg(0, std::ios::beg);
-    vector<unsigned char> ar(fileSize);
-    vector<unsigned char> iheaders;
-    vector<unsigned char> idata;
-    f.read((char*) &ar[0], (int)fileSize);
-    f.close();
-    if(check_archive(ar)) {
-        for(auto i = 8; i < (int)ar.size(); i++) {
-          if(ar[i] != '`') {
-            iheaders.push_back(ar[i]);
-          }
-          idata.push_back(ar[i]);
-        }
-        
-        string hpattern = "([\\w\\-\\/]+)\\s*(\\d{10})\\s{2}(\\d{4})\\s{2}(\\d{4})"; //.*";
-        hpattern.append("\\s{2}(\\d{6})\\s{2}(\\d{1,4}).*");
-        string mheaders;
-        for(unsigned char c : iheaders) {
-          mheaders += c;
-        }
-
-        cout << mheaders << endl << endl;
-
-        smatch m;
-        regex p(hpattern);
-        if(regex_search(mheaders, m, p)) {
-          cout << m[1].str() << endl;
-          cout << m[2].str() << endl;
-          cout << m[3].str() << endl;
-          cout << m[4].str() << endl;
-          cout << m[5].str() << endl;
-          cout << m[6].str() << endl;
-        }
+  streampos fileSize;
+  ifstream f(archive.c_str(), ios::binary | ios::in);
+  f.seekg(0, std::ios::end);
+  fileSize = f.tellg();
+  f.seekg(0, std::ios::beg);
+  vector<unsigned char> ar(fileSize);
+  vector<unsigned char> iheaders;
+  vector<unsigned char> idata;
+  f.read((char*) &ar[0], (int)fileSize);
+  f.close();
+  if(check_archive(ar)) {
+    for(auto i = 8; i < (int)ar.size(); i++) {
+      if(ar[i] != '`') {
+        iheaders.push_back(ar[i]);
+      }
+      idata.push_back(ar[i]);
     }
+
+    string hpattern = "([\\w\\-\\\\./]+)\\s*(\\d{10})\\s{2}(\\d{4})\\s{2}(\\d{4})"; //.*";
+    hpattern.append("\\s{2}(\\d{6})\\s{2}(\\d{1,4}).*");
+    string mheaders;
+    for(unsigned char c : iheaders) {
+      mheaders += c;
+    }
+    iheaders.clear(); // Clear iheaders vector as done with it.
+
+    vector<string> filenames;
+    vector<string> headers = split(mheaders, '\n');
+    regex p(hpattern);
+    for(string header: headers) {
+      smatch m;
+      if(regex_search(header, m, p)) {
+        filenames.push_back(m[1].str());
+      }
+    }
+    headers.clear(); // Clear headers vector as done with it.
+    cout << filenames.at(0) << endl; // !
+  }
 }
 
 int write_archive(string archive, string manifest) {
