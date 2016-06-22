@@ -150,13 +150,24 @@ void read_ar_entries(string archive) {
           }
           idata.push_back(ar[i]);
         }
-        regex hpattern("([\\.\\-_\\w\\/]+\\s*\\d{10}\\s{2}\\d{4}\\s{2}\\d{4}\\s{2}\\d{6}\\s{2}\\d{1,4})",
-        regex_constants::ECMAScript);
+        // string hpattern = "([\\.\\-_\\w\\/]+\\s*\\d{10}\\s{2}\\d{4}\\s{2}\\d{4}";
+        // hpattern.append("\\s{2}\\d{6}\\s{2}\\d{1,4})");
+        string hpattern = "(deb)";
         string mheaders;
         for(unsigned char c : iheaders) {
           mheaders += c;
         }
-        // cout << mheaders << endl;
+
+        cout << mheaders << endl;
+        cout << endl;
+
+        smatch m;
+        regex p(hpattern, regex_constants::ECMAScript);
+        bool pm = regex_match(mheaders, m, p);
+        cout << pm << endl;
+        if(regex_match(mheaders, m, p)) {
+          cout << m[1].str() << endl;
+        }
     }
 }
 
