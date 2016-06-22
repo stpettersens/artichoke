@@ -190,6 +190,7 @@ int write_archive(string archive, string manifest) {
 
 int read_archive(string archive, int verbose) {
 
+    cout << verbose << endl << endl; // !TODO Remove this.
 
     read_ar_entries(archive, verbose);
     return 0;
