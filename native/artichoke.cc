@@ -150,6 +150,9 @@ void read_ar_entries(string archive, int verbose) {
       idata.push_back(ar[i]);
     }
 
+    cout << idata.at(0) << endl; // TODO: Remove this.
+    cout << std::hex << (int)idata.at(0) << endl << endl; // TODO: Remove this.
+
     string hpattern = "([\\w\\-\\\\./]+)\\s*(\\d{10})\\s{2}(\\d{4})\\s{2}(\\d{4})"; //.*";
     hpattern.append("\\s{2}(\\d{6})\\s{2}(\\d{1,4}).*");
     string mheaders;
