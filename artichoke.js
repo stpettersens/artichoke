@@ -197,8 +197,8 @@ module.exports.createArchive = function (archive, files, options) {
 
   options = setCommonOptions(options)
   if (options && options.verbose) {
-    console.info('\nUsing native: ', USE_NATIVE)
-    console.info('Creating archive: ', archive)
+    console.info('\nartichoke: Creating archive: ', archive,
+     ' ( native: ', USE_NATIVE, ' )')
     console.log(JSON.stringify(entries, null, 4))
   }
 
@@ -219,8 +219,8 @@ module.exports.createArchive = function (archive, files, options) {
 module.exports.unpackArchive = function (archive, options) {
   options = setCommonOptions(options)
   if (options && options.verbose) {
-    console.info('\nUse native: ', USE_NATIVE)
-    console.info('Unpacking archive: ', archive)
+    console.info('\nartichoke: Unpacking archive: ', archive,
+    ' ( native: ', USE_NATIVE, ' ) ')
   }
 
   if (USE_NATIVE) {
