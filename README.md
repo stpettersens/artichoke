@@ -1,4 +1,5 @@
 #### artichoke
+![artichoke](https://github.com/stpettersens/artichoke/blob/master/artichoke_logo.png)
 > :package: Unix archiver (ar) implementation with Node.js.
 
 [![Build Status](https://travis-ci.org/stpettersens/artichoke.png?branch=master)](https://travis-ci.org/stpettersens/artichoke)
@@ -41,6 +42,11 @@ If you wish to make use of the native-addon. Your system will need:
 * [node-gyp](https://github.com/nodejs/node-gyp)
 * Python 2.7+ (not 3.0+)
 * A C++11 compiler (e.g. g++ 4.8+)
+
+
+##### Logo
+
+Special thanks to James Warman for designing the logo.
 
 ##### License
 
