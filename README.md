@@ -1,4 +1,5 @@
 #### artichoke
+![artichoke](https://github.com/stpettersens/artichoke/blob/master/artichoke_logo.png)
 > :package: Unix archiver (ar) implementation with Node.js.
 
 [![Build Status](https://travis-ci.org/stpettersens/artichoke.png?branch=master)](https://travis-ci.org/stpettersens/artichoke)
