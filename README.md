@@ -43,6 +43,11 @@ If you wish to make use of the native-addon. Your system will need:
 * Python 2.7+ (not 3.0+)
 * A C++11 compiler (e.g. g++ 4.8+)
 
+
+##### Logo
+
+Special thanks to James Warman for designing the logo.
+
 ##### License
 
 Artichoke is dual licensed under the GNU General Public License and MIT licenses respectively.
