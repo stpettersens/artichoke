@@ -46,7 +46,7 @@ If you wish to make use of the native-addon. Your system will need:
 
 ##### Logo
 
-Special thanks to James Warman for designing the logo.
+Special thanks to [James Warman](https://github.com/jwarman87) for designing the logo.
 
 ##### License
 
