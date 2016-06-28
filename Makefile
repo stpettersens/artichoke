@@ -1,5 +1,6 @@
 CC = g++
+SWITCHES = --std=c++11
 TARGET = pattern
 
 make:
-	$(CC) --std=c++11 $(TARGET).cc -o $(TARGET)
+	$(CC) $(SWITCHES) $(TARGET).cc -o $(TARGET)
