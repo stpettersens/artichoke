@@ -6,3 +6,5 @@ node_modules/
 *.ar
 *.bin
 debian-binary
+# Temporary binary
+pattern

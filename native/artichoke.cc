@@ -162,16 +162,36 @@ void read_ar_entries(string archive, int verbose) {
     iheaders.clear(); // Clear iheaders vector as done with it.
 
     vector<string> filenames;
+    vector<int> timestamps;
+    vector<int> owners;
+    vector<int> groups;
+    vector<int> fmodes;
+    vector<int> fsizes;
     vector<string> headers = split(mheaders, '\n');
     regex p(hpattern);
     for(string header: headers) {
       smatch m;
       if(regex_search(header, m, p)) {
         filenames.push_back(m[1].str());
+        timestamps.push_back(stoi(m[2].str()));
+        owners.push_back(stoi(m[3].str()));
+        groups.push_back(stoi(m[4].str()));
+        fmodes.push_back(stoi(m[5].str()));
+        fsizes.push_back(stoi(m[6].str()));
       }
     }
+
+    // TODO: Remove this block except for headers.clear();
+    for(int i = 0; i < (int)filenames.size(); i++) {
+      cout << filenames.at(i) << endl;
+      cout << timestamps.at(i) << endl;
+      cout << owners.at(i) << endl;
+      cout << groups.at(i) << endl;
+      cout << fmodes.at(i) << endl;
+      cout << fsizes.at(i) << endl;
+      cout << endl;
+    }
     headers.clear(); // Clear headers vector as done with it.
-    //cout << filenames.at(0) << endl; // !
   }
 }
 
@@ -192,8 +212,7 @@ int write_archive(string archive, string manifest) {
 }
 
 int read_archive(string archive, int verbose) {
-    //cout << verbose << endl << endl; // !TODO Remove this.
-
+    cout << verbose << endl << endl; // !TODO Remove this.
     read_ar_entries(archive, verbose);
     return 0;
 }
