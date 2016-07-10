@@ -4,3 +4,6 @@ TARGET = pattern
 
 make:
 	$(CC) $(SWITCHES) $(TARGET).cc -o $(TARGET)
+
+clean:
+	rm -f $(TARGET)
