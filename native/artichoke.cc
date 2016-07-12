@@ -20,7 +20,7 @@ using namespace std;
 
 class ArEntry {
 private:
-    std::string file;
+    string file;
     int modified;
     int owner;
     int group;
@@ -192,6 +192,18 @@ void read_ar_entries(string archive, int verbose) {
       cout << endl;
     }
     headers.clear(); // Clear headers vector as done with it.
+
+    vector<string> vdata;
+    for(unsigned char datum: idata) {
+      stringstream datum_h;
+      datum_h << hex << (int)datum;
+      vdata.push_back(datum_h.str());
+    }
+    string sdata;
+    for(string datum: vdata) {
+      sdata.append(datum + '|');
+    }
+    cout << sdata << endl;
   }
 }
 
