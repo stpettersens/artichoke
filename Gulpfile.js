@@ -19,7 +19,7 @@ gulp.task('files', function () {
 })
 
 gulp.task('test1', function () {
-  return gulp.src(['control.tar.gz', 'data.tar.gz', 'debian-binary'])
+  return gulp.src(['*control.tar.gz', '*data.tar.gz', '*debian-binary'])
   .pipe(clean())
 })
 

@@ -27,13 +27,13 @@ describe('Test artichoke:', function () {
     })
   })
 
-  /* it('Should create archive using native implementation.', function (done) {
+  it('Should create archive using native implementation.', function (done) {
     artichoke.createArchive(archives[0], sources, {native: true, verbose: true})
     if (!fs.existsSync(archives[0])) {
       throw Error
     }
     done()
-  }) */
+  })
 
   it('Should create archive using pure JS implementation.', function (done) {
     artichoke.createArchive(archives[1], sources, {native: false, verbose: true})
