@@ -1,5 +1,5 @@
 {
-  "name": "artichoke",
+  "name": "ssp-artichoke",
   "version": "0.1.1",
   "description": "Unix archiver (ar) implementation with Node.js",
   "main": "artichoke.js",

@@ -4,12 +4,12 @@
 
 [![Build Status](https://travis-ci.org/stpettersens/artichoke.png?branch=master)](https://travis-ci.org/stpettersens/artichoke)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](https://github.com/feross/standard)
-[![npm version](https://badge.fury.io/js/artichoke.svg)](http://npmjs.com/package/artichoke)
+[![npm version](https://badge.fury.io/js/ssp-artichoke.svg)](http://npmjs.com/package/ssp-artichoke)
 [![Dependency Status](https://david-dm.org/stpettersens/artichoke.png?theme=shields.io)](https://david-dm.org/stpettersens/artichoke) [![Development Dependency Status](https://david-dm.org/stpettersens/artichoke/dev-status.png?theme=shields.io)](https://david-dm.org/stpettersens/artichoke#info=devDependencies)
 
 ##### Install
 
-- `npm install artichoke --production`
+- `npm install ssp-artichoke --production`
 
 ##### Tests
 
@@ -27,7 +27,7 @@ Then run tests with:
 ```js
 'use strict'
 
-const artichoke = require('artichoke')
+const artichoke = require('ssp-artichoke')
 let options = {native: true, verbose: false}
 artichoke.createArchive('my_archive.ar', ['package.json', 'GPL-LICENSE', 'MIT-LICENSE'], options)
 ```
